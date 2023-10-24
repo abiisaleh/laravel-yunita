@@ -15,6 +15,7 @@ use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class JadwalKegiatanResource extends Resource
@@ -76,5 +77,41 @@ class JadwalKegiatanResource extends Resource
             'create' => Pages\CreateJadwalKegiatan::route('/create'),
             'edit' => Pages\EditJadwalKegiatan::route('/{record}/edit'),
         ];
+    }
+
+    public static function canCreate(): bool
+    {
+        if (auth()->user()->role == 'admin') {
+            return true;
+        }
+
+        return false;
+    }
+
+    public static function canEdit(Model $record): bool
+    {
+        if (auth()->user()->role == 'admin') {
+            return true;
+        }
+
+        return false;
+    }
+
+    public static function canDelete(Model $record): bool
+    {
+        if (auth()->user()->role == 'admin') {
+            return true;
+        }
+
+        return false;
+    }
+
+    public static function canDeleteAny(): bool
+    {
+        if (auth()->user()->role == 'admin') {
+            return true;
+        }
+
+        return false;
     }
 }

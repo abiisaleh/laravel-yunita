@@ -59,4 +59,13 @@ class GolonganDarahResource extends Resource
             'index' => Pages\ManageGolonganDarahs::route('/'),
         ];
     }
+
+    public static function canViewAny(): bool
+    {
+        if (in_array(auth()->user()->role, ['admin'])) {
+            return true;
+        }
+
+        return false;
+    }
 }

@@ -61,4 +61,13 @@ class PekerjaanResource extends Resource
             'index' => Pages\ManagePekerjaans::route('/'),
         ];
     }
+
+    public static function canViewAny(): bool
+    {
+        if (in_array(auth()->user()->role, ['admin'])) {
+            return true;
+        }
+
+        return false;
+    }
 }

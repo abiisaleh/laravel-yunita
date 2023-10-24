@@ -61,4 +61,13 @@ class JenisDarahResource extends Resource
             'index' => Pages\ManageJenisDarahs::route('/'),
         ];
     }
+
+    public static function canViewAny(): bool
+    {
+        if (in_array(auth()->user()->role, ['admin'])) {
+            return true;
+        }
+
+        return false;
+    }
 }

@@ -13,9 +13,14 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\Filter;
+use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Malzariey\FilamentDaterangepickerFilter\Filters\DateRangeFilter;
+use pxlrbt\FilamentExcel\Actions\Tables\ExportBulkAction;
 
 class DarahMasukResource extends Resource
 {
@@ -25,7 +30,7 @@ class DarahMasukResource extends Resource
 
     protected static ?string $pluralLabel = 'Darah Masuk';
 
-    protected static ?int $navigationSort = 2;
+    protected static ?int $navigationSort = 1;
 
     public static function form(Form $form): Form
     {
@@ -45,15 +50,24 @@ class DarahMasukResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('no_selang'),
-                TextColumn::make('pendonor.nama'),
+                TextColumn::make('no_selang')
+                    ->searchable(),
+                TextColumn::make('pendonor.nama')
+                    ->searchable(),
                 TextColumn::make('pendonor.golongan_darah.nama'),
+                TextColumn::make('pendonor.rh')
+                    ->label('Rhesus'),
                 TextColumn::make('pendonor.jenis_darah.nama'),
                 TextColumn::make('tanggal')
                     ->date('d/m/Y'),
             ])
             ->filters([
-                //
+                SelectFilter::make('pendonor.golongan_darah.nama')
+                    ->label('Golongan Darah'),
+                SelectFilter::make('pendonor.jenis_darah.nama')
+                    ->label('Jenis Darah'),
+                DateRangeFilter::make('tanggal'),
+
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
@@ -62,6 +76,7 @@ class DarahMasukResource extends Resource
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
+                ExportBulkAction::make(),
             ]);
     }
 
@@ -79,5 +94,41 @@ class DarahMasukResource extends Resource
             'create' => Pages\CreateDarahMasuk::route('/create'),
             'edit' => Pages\EditDarahMasuk::route('/{record}/edit'),
         ];
+    }
+
+    public static function canCreate(): bool
+    {
+        if (auth()->user()->role == 'admin') {
+            return true;
+        }
+
+        return false;
+    }
+
+    public static function canEdit(Model $record): bool
+    {
+        if (auth()->user()->role == 'admin') {
+            return true;
+        }
+
+        return false;
+    }
+
+    public static function canDelete(Model $record): bool
+    {
+        if (auth()->user()->role == 'admin') {
+            return true;
+        }
+
+        return false;
+    }
+
+    public static function canDeleteAny(): bool
+    {
+        if (auth()->user()->role == 'admin') {
+            return true;
+        }
+
+        return false;
     }
 }

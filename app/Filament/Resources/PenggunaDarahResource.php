@@ -13,10 +13,14 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\Filter;
+use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Malzariey\FilamentDaterangepickerFilter\Filters\DateRangeFilter;
+use pxlrbt\FilamentExcel\Actions\Tables\ExportBulkAction;
 
 class PenggunaDarahResource extends Resource
 {
@@ -62,15 +66,19 @@ class PenggunaDarahResource extends Resource
                 //
                 TextColumn::make('tanggal')
                     ->date('d/m/Y'),
-                TextColumn::make('pengguna'),
-                TextColumn::make('rumah_sakit.nama'),
-                TextColumn::make('darah_masuk.no_selang'),
+                TextColumn::make('pengguna')->searchable(),
+                TextColumn::make('rumah_sakit.nama')->searchable(),
+                TextColumn::make('darah_masuk.no_selang')->searchable(),
                 TextColumn::make('darah_masuk.pendonor.golongan_darah.nama'),
                 TextColumn::make('darah_masuk.pendonor.jenis_darah.nama'),
                 TextColumn::make('jumlah_kolf'),
             ])
             ->filters([
-                //
+                SelectFilter::make('darah_masuk.pendonor.golongan_darah.nama')
+                    ->label('Golongan Darah'),
+                SelectFilter::make('darah_masuk.pendonor.jenis_darah.nama')
+                    ->label('Jenis Darah'),
+                DateRangeFilter::make('tanggal'),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
@@ -79,6 +87,8 @@ class PenggunaDarahResource extends Resource
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
+                ExportBulkAction::make(),
+
             ]);
     }
 
@@ -96,5 +106,50 @@ class PenggunaDarahResource extends Resource
             'create' => Pages\CreatePenggunaDarah::route('/create'),
             'edit' => Pages\EditPenggunaDarah::route('/{record}/edit'),
         ];
+    }
+
+    public static function canViewAny(): bool
+    {
+        if (in_array(auth()->user()->role, ['admin', 'super'])) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public static function canCreate(): bool
+    {
+        if (auth()->user()->role == 'admin') {
+            return true;
+        }
+
+        return false;
+    }
+
+    public static function canEdit(Model $record): bool
+    {
+        if (auth()->user()->role == 'admin') {
+            return true;
+        }
+
+        return false;
+    }
+
+    public static function canDelete(Model $record): bool
+    {
+        if (auth()->user()->role == 'admin') {
+            return true;
+        }
+
+        return false;
+    }
+
+    public static function canDeleteAny(): bool
+    {
+        if (auth()->user()->role == 'admin') {
+            return true;
+        }
+
+        return false;
     }
 }

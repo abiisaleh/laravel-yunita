@@ -61,4 +61,13 @@ class RumahSakitResource extends Resource
             'index' => Pages\ManageRumahSakits::route('/'),
         ];
     }
+
+    public static function canViewAny(): bool
+    {
+        if (in_array(auth()->user()->role, ['admin'])) {
+            return true;
+        }
+
+        return false;
+    }
 }
