@@ -17,6 +17,7 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Cheesegrits\FilamentGoogleMaps\Fields\Map;
 
 class JadwalKegiatanResource extends Resource
 {
@@ -36,6 +37,8 @@ class JadwalKegiatanResource extends Resource
                 TextInput::make('tempat'),
                 DatePicker::make('tanggal'),
                 TimePicker::make('waktu'),
+                Map::make('location')
+                    ->columnSpanFull(),
             ]);
     }
 

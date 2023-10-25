@@ -1,249 +1,90 @@
 <!DOCTYPE html>
 
-<html
-  class="not-ready lg:text-base"
-  style="--bg: #faf8f1"
-  lang="en"
->
+<html lang="en">
   <head>
-  <meta charset="utf-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1, shrink-to-fit=no"
-  />
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
 
-  
-  <title>abiisaleh</title>
+    @vite(['resources/css/app.css','resources/js/app.js'])
 
-  
-  <meta name="theme-color" />
+    <title>{{ config('app.name') }}</title>
+  </head>
 
-  
-  
-  
-  
-  <meta
-    name="description"
-    content="A personal blog"
-  />
-  <meta name="author" content="muhamad abi saleh" />
-  
-
-  
-  
-  
-  
-  
-  
-  <link rel="preload stylesheet" as="style" href="https://abiisaleh.xyz/main.min.css" />
-
-  
-
-  
-   
-  <link rel="preload" as="image" href="https://abiisaleh.xyz/theme.png" />
-
-  
-  
-  
-  <link rel="preload" as="image" href="https://avatars.githubusercontent.com/u/92934849?v=4" />
-  
-  
-
-  
-  <link rel="preload" as="image" href="https://abiisaleh.xyz/github.svg" />
-  
-  <link rel="preload" as="image" href="https://abiisaleh.xyz/instagram.svg" />
-  
-  
-
-  
-  
-
-  
-  <link rel="icon" href="https://abiisaleh.xyz/favicon.ico" />
-  <link rel="apple-touch-icon" href="https://abiisaleh.xyz/apple-touch-icon.png" />
-
-  
-  <meta name="generator" content="Hugo 0.115.4">
-
-  
-  
-  <link
-    rel="alternate"
-    type="application/rss&#43;xml"
-    href="https://abiisaleh.xyz/index.xml"
-    title="abiisaleh"
-  />
-  
-
-  
-  
-  
-  
-  
-  
-  
-  <meta property="og:title" content="" />
-<meta property="og:description" content="" />
-<meta property="og:type" content="website" />
-<meta property="og:url" content="https://abiisaleh.xyz/" />
-
-
-  
-  <meta itemprop="name" content="">
-<meta itemprop="description" content="">
-  
-  <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content=""/>
-<meta name="twitter:description" content=""/>
-
-  
-  
-</head>
-
-  <body class="text-black duration-200 ease-out dark:text-white">
-    <header class="mx-auto flex h-[4.5rem] max-w-3xl px-8 lg:justify-center">
-  <div class="relative z-50 mr-auto flex items-center">
-    <a
-      class="-translate-x-[1px] -translate-y-[1px] text-2xl font-semibold"
-      href="https://abiisaleh.xyz/"
-      >abiisaleh</a
-    >
-    <div
-      class="btn-dark text-[0] ml-4 h-6 w-6 shrink-0 cursor-pointer [background:url(./theme.png)_left_center/_auto_theme('spacing.6')_no-repeat] [transition:_background-position_0.4s_steps(5)] dark:[background-position:right]"
-      role="button"
-      aria-label="Dark"
-    ></div>
+  <body>
+    
+<nav class="bg-white border-gray-200 dark:bg-gray-900">
+  <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+    <a href="https://flowbite.com/" class="flex items-center">
+        <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">🩸 Darahku</span>
+    </a>
+    <div class="flex md:order-2">
+      <a href="admin" class="text-white bg-rose-600 hover:bg-rose-800 focus:ring-4 focus:outline-none focus:ring-rose-300 font-medium rounded-lg text-sm px-4 py-2 text-center mr-3 md:mr-0 dark:bg-rose-600 dark:hover:bg-rose-700 dark:focus:ring-rose-800">Login</a>
+      <button data-collapse-toggle="navbar-default" type="button" class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" aria-controls="navbar-default" aria-expanded="false">
+        <span class="sr-only">Open main menu</span>
+        <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h15M1 7h15M1 13h15"/>
+        </svg>
+    </button>
   </div>
-
-  <div
-    class="btn-menu relative z-50 -mr-8 flex h-[4.5rem] w-[5rem] shrink-0 cursor-pointer flex-col items-center justify-center gap-2.5 lg:hidden"
-    role="button"
-    aria-label="Menu"
-  ></div>
-
-  
-  <script>
-    
-    const htmlClass = document.documentElement.classList;
-    setTimeout(() => {
-      htmlClass.remove('not-ready');
-    }, 10);
-
-    
-    const btnMenu = document.querySelector('.btn-menu');
-    btnMenu.addEventListener('click', () => {
-      htmlClass.toggle('open');
-    });
-
-    
-    const metaTheme = document.querySelector('meta[name="theme-color"]');
-    const lightBg = '#faf8f1'.replace(/"/g, '');
-    const setDark = (isDark) => {
-      metaTheme.setAttribute('content', isDark ? '#000' : lightBg);
-      htmlClass[isDark ? 'add' : 'remove']('dark');
-      localStorage.setItem('dark', isDark);
-    };
-
-    
-    const darkScheme = window.matchMedia('(prefers-color-scheme: dark)');
-    if (htmlClass.contains('dark')) {
-      setDark(true);
-    } else {
-      const darkVal = localStorage.getItem('dark');
-      setDark(darkVal ? darkVal === 'true' : darkScheme.matches);
-    }
-
-    
-    darkScheme.addEventListener('change', (event) => {
-      setDark(event.matches);
-    });
-
-    
-    const btnDark = document.querySelector('.btn-dark');
-    btnDark.addEventListener('click', () => {
-      setDark(localStorage.getItem('dark') !== 'true');
-    });
-  </script>
-
-  <div
-    class="nav-wrapper fixed inset-x-0 top-full z-40 flex h-full select-none flex-col justify-center pb-16 duration-200 dark:bg-black lg:static lg:h-auto lg:flex-row lg:!bg-transparent lg:pb-0 lg:transition-none"
-  >
-    
-    
-    <nav class="lg:ml-12 lg:flex lg:flex-row lg:items-center lg:space-x-6">
-
-        <a
-        class="block text-center text-2xl leading-[5rem] lg:text-base lg:font-normal"
-        href="/blog/"
-        >Blog</a
-      >
-      
-      <a
-        class="block text-center text-2xl leading-[5rem] lg:text-base lg:font-normal"
-        href="/about/"
-        >About</a
-      >
-      
-      <a
-        class="block text-center text-2xl leading-[5rem] lg:text-base lg:font-normal"
-        href="mailto:abi.saleh.25@gmail.com"
-        >Contact</a
-      >
-      
-    </nav>
-    
-
-    
-    <nav
-      class="mt-12 flex justify-center space-x-10 dark:invert lg:ml-12 lg:mt-0 lg:items-center lg:space-x-6"
-    >
-      
-      <a
-        class="h-8 w-8 text-[0] [background:var(--url)_center_center/cover_no-repeat] lg:h-6 lg:w-6"
-        style="--url: url(./github.svg)"
-        href="https://github.com/abiisaleh"
-        target="_blank"
-        rel="me"
-      >
-        github
-      </a>
-      
-      <a
-        class="h-8 w-8 text-[0] [background:var(--url)_center_center/cover_no-repeat] lg:h-6 lg:w-6"
-        style="--url: url(./instagram.svg)"
-        href="https://instagram.com/abiisaleh"
-        target="_blank"
-        rel="me"
-      >
-        instagram
-      </a>
-      
-    </nav>
-    
+    <div class="hidden w-full md:block md:w-auto" id="navbar-default">
+      <ul class="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
+        <li>
+          <a href="#" class="block py-2 pl-3 pr-4 text-white bg-rose-700 rounded md:bg-transparent md:text-rose-700 md:p-0 dark:text-white md:dark:text-rose-500" aria-current="page">Home</a>
+        </li>
+        <li>
+          <a href="#" class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-rose-700 md:p-0 dark:text-white md:dark:hover:text-rose-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">About</a>
+        </li>
+        <li>
+          <a href="#" class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-rose-700 md:p-0 dark:text-white md:dark:hover:text-rose-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Stok Darah</a>
+        </li>
+        <li>
+          <a href="#" class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-rose-700 md:p-0 dark:text-white md:dark:hover:text-rose-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Info Donor</a>
+        </li>
+        <li>
+          <a href="#contact" class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-rose-700 md:p-0 dark:text-white md:dark:hover:text-rose-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Contact</a>
+        </li>
+      </ul>
+    </div>
   </div>
-</header>
-<main class="prose prose-neutral relative mx-auto min-h-[calc(100%-9rem)] max-w-3xl px-8 pb-16 pt-12 dark:prose-invert">
+</nav>
+
+
     @yield('content')
-</main>
 
-    <footer class="opaco mx-auto flex h-[4.5rem] max-w-3xl items-center px-8 text-[0.9em] opacity-60">
-  <div class="mr-auto">
-    &copy; 2023
-    <a class="link" href="https://abiisaleh.xyz/">abiisaleh</a>
+    
+<footer class="bg-white dark:bg-gray-900">
+  <div class="mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8">
+
+    <hr class="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8" />
+    <div class="sm:flex sm:items-center sm:justify-between">
+        <span class="text-sm text-gray-500 sm:text-center dark:text-gray-400">© 2023 <a href="https://abiisaleh.xyz/" class="hover:underline">abiisaleh</a>. All Rights Reserved.
+        </span>
+        <div class="flex mt-4 space-x-5 sm:justify-center sm:mt-0">
+            <a href="#" class="text-gray-500 hover:text-gray-900 dark:hover:text-white">
+                <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 8 19">
+                      <path fill-rule="evenodd" d="M6.135 3H8V0H6.135a4.147 4.147 0 0 0-4.142 4.142V6H0v3h2v9.938h3V9h2.021l.592-3H5V3.591A.6.6 0 0 1 5.592 3h.543Z" clip-rule="evenodd"/>
+                  </svg>
+                <span class="sr-only">Facebook page</span>
+            </a>
+            <a href="#" class="text-gray-500 hover:text-gray-900 dark:hover:text-white">
+                <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 17">
+                  <path fill-rule="evenodd" d="M20 1.892a8.178 8.178 0 0 1-2.355.635 4.074 4.074 0 0 0 1.8-2.235 8.344 8.344 0 0 1-2.605.98A4.13 4.13 0 0 0 13.85 0a4.068 4.068 0 0 0-4.1 4.038 4 4 0 0 0 .105.919A11.705 11.705 0 0 1 1.4.734a4.006 4.006 0 0 0 1.268 5.392 4.165 4.165 0 0 1-1.859-.5v.05A4.057 4.057 0 0 0 4.1 9.635a4.19 4.19 0 0 1-1.856.07 4.108 4.108 0 0 0 3.831 2.807A8.36 8.36 0 0 1 0 14.184 11.732 11.732 0 0 0 6.291 16 11.502 11.502 0 0 0 17.964 4.5c0-.177 0-.35-.012-.523A8.143 8.143 0 0 0 20 1.892Z" clip-rule="evenodd"/>
+              </svg>
+                <span class="sr-only">Twitter page</span>
+            </a>
+            <a href="#" class="text-gray-500 hover:text-gray-900 dark:hover:text-white">
+                <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M10 .333A9.911 9.911 0 0 0 6.866 19.65c.5.092.678-.215.678-.477 0-.237-.01-1.017-.014-1.845-2.757.6-3.338-1.169-3.338-1.169a2.627 2.627 0 0 0-1.1-1.451c-.9-.615.07-.6.07-.6a2.084 2.084 0 0 1 1.518 1.021 2.11 2.11 0 0 0 2.884.823c.044-.503.268-.973.63-1.325-2.2-.25-4.516-1.1-4.516-4.9A3.832 3.832 0 0 1 4.7 7.068a3.56 3.56 0 0 1 .095-2.623s.832-.266 2.726 1.016a9.409 9.409 0 0 1 4.962 0c1.89-1.282 2.717-1.016 2.717-1.016.366.83.402 1.768.1 2.623a3.827 3.827 0 0 1 1.02 2.659c0 3.807-2.319 4.644-4.525 4.889a2.366 2.366 0 0 1 .673 1.834c0 1.326-.012 2.394-.012 2.72 0 .263.18.572.681.475A9.911 9.911 0 0 0 10 .333Z" clip-rule="evenodd"/>
+                </svg>
+                <span class="sr-only">GitHub account</span>
+            </a>
+        </div>
+    </div>
   </div>
-  <a class="link mx-6" href="https://gohugo.io/" rel="noopener" target="_blank"
-    >Powered by Hugo️️</a
-  >️
-  <a
-    class="link"
-    href="https://github.com/nanxiaobei/hugo-paper"
-    rel="noopener"
-    target="_blank"
-    >✎ Paper</a
-  >
 </footer>
 
   </body>
