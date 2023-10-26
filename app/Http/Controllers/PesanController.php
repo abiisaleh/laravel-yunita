@@ -15,6 +15,8 @@ class PesanController extends Controller
             'message' => $request->message,
         ];
 
-        return Pesan::create($data);
+        Pesan::create($data);
+
+        return 'data berhasil dikirim';
     }
 }

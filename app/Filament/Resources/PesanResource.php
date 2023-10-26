@@ -59,15 +59,12 @@ class PesanResource extends Resource
                     ->sortable()
                     ->since()
                     ->label('Dikirim'),
-                Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->label('Dijawab'),
             ])
             ->filters([
                 //
             ])
             ->actions([
+                // View::make(),
                 Tables\Actions\EditAction::make()
                     ->label('Reply')
                     ->mutateFormDataUsing(function (array $data, Pesan $record): array {
@@ -78,7 +75,8 @@ class PesanResource extends Resource
 
                         Mail::to($record->email)->send(new DarahkuNoReply($mail));
                         return $data;
-                    }),
+                    })
+                    ->hidden(fn (Pesan $record): bool => is_null($record->reply) ? false : true),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
