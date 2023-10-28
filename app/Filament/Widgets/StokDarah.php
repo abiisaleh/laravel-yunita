@@ -9,6 +9,13 @@ use Filament\Widgets\StatsOverviewWidget\Stat;
 
 class StokDarah extends BaseWidget
 {
+    protected int | string | array $columnSpan = 1;
+
+    protected function getColumns(): int
+    {
+        return 1;
+    }
+
     protected function getStats(): array
     {
         $darah_masuk = DarahMasuk::all()->count();
@@ -16,7 +23,7 @@ class StokDarah extends BaseWidget
         $stok_darah = $darah_masuk - $darah_keluar;
 
         return [
-            Stat::make('Stok Darah', $stok_darah),
+            // Stat::make('Stok Darah', $stok_darah),
             Stat::make('Darah Masuk', $darah_masuk),
             Stat::make('Darah Keluar', $darah_keluar),
         ];

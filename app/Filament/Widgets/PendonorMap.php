@@ -18,7 +18,7 @@ class PendonorMap extends MapWidget
 
     protected static ?int $zoom = 12;
 
-    // protected int | string | array $columnSpan = 'full';
+    protected int | string | array $columnSpan = 'full';
 
     public array $controls = [
         'mapTypeControl'    => false,
