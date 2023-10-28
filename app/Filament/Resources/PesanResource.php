@@ -13,6 +13,8 @@ use Filament\Forms\Form;
 use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Columns\ToggleColumn;
+use Filament\Tables\Filters\Filter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -61,7 +63,9 @@ class PesanResource extends Resource
                     ->label('Dikirim'),
             ])
             ->filters([
-                //
+                Filter::make('belum_dijawab')
+                    ->default()
+                    ->query(fn (Builder $query): Builder => $query->where('reply', null))
             ])
             ->actions([
                 // View::make(),

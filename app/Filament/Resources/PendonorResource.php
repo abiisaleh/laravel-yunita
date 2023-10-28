@@ -5,8 +5,10 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\PendonorResource\Pages;
 use App\Filament\Resources\PendonorResource\RelationManagers;
 use App\Models\Pendonor;
+use Cheesegrits\FilamentGoogleMaps\Fields\Map;
 use Filament\Forms;
 use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\Fieldset;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
@@ -48,13 +50,45 @@ class PendonorResource extends Resource
                 Select::make('pekerjaan_id')
                     ->relationship(name: 'pekerjaan', titleAttribute: 'nama')
                     ->native(false),
-                Select::make('golongan_darah_id')
-                    ->relationship(name: 'golongan_darah', titleAttribute: 'nama')
-                    ->native(false),
-                Select::make('jenis_darah_id')
-                    ->relationship(name: 'jenis_darah', titleAttribute: 'nama')
-                    ->native(false),
-                Textarea::make('alamat'),
+                Fieldset::make()
+                    ->schema([
+                        Select::make('golongan_darah_id')
+                            ->relationship(name: 'golongan_darah', titleAttribute: 'nama')
+                            ->native(false)
+                            ->columns(1),
+                        Select::make('rh')
+                            ->label('Rheus')
+                            ->options([
+                                'positive' => 'Positive',
+                                'negative' => 'Negative'
+                            ])
+                            ->native(false),
+                        Select::make('jenis_darah_id')
+                            ->relationship(name: 'jenis_darah', titleAttribute: 'nama')
+                            ->native(false),
+                    ])
+                    ->columns(3),
+                Fieldset::make()
+                    ->schema([
+                        TextInput::make('alamat')
+                            ->columnSpanFull(),
+                        Map::make('location')
+                            ->mapControls([
+                                'mapTypeControl'    => true,
+                                'scaleControl'      => true,
+                                'streetViewControl' => false,
+                                'rotateControl'     => false,
+                                'fullscreenControl' => true,
+                                'searchBoxControl'  => false, // creates geocomplete field inside map
+                                'zoomControl'       => true,
+                            ])
+                            ->clickable()
+                            ->defaultLocation([-2.5651354, 140.5986246])
+                            ->autocomplete('alamat')
+                            ->defaultZoom(12)
+                            ->columnSpanFull(),
+                    ]),
+
             ]);
     }
 

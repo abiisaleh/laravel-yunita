@@ -38,6 +38,19 @@ class JadwalKegiatanResource extends Resource
                 DatePicker::make('tanggal'),
                 TimePicker::make('waktu'),
                 Map::make('location')
+                    ->mapControls([
+                        'mapTypeControl'    => true,
+                        'scaleControl'      => true,
+                        'streetViewControl' => false,
+                        'rotateControl'     => false,
+                        'fullscreenControl' => true,
+                        'searchBoxControl'  => false, // creates geocomplete field inside map
+                        'zoomControl'       => true,
+                    ])
+                    ->clickable()
+                    ->defaultLocation([-2.5651354, 140.5986246])
+                    ->autocomplete('tempat')
+                    ->defaultZoom(12)
                     ->columnSpanFull(),
             ]);
     }
