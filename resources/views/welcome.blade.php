@@ -70,9 +70,17 @@
         @foreach ($donor as $item)
     
         <div class="max-w-lg mx-auto bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-          <a href="#">
-              <img class="rounded-t-lg" src="https://flowbite.com/docs/images/blog/image-1.jpg" alt="" />
-          </a>
+          <iframe 
+            class="rounded-t-lg"
+            src="https://www.google.com/maps/embed/v1/place?key={{ env('GOOGLE_MAPS_API_KEY') }}
+            &q={{$item->lat}},{{$item->lng}}&region=id" 
+            height="250" 
+            style="border:0; margin: 12px auto" 
+            allowfullscreen="true" 
+            loading="lazy" 
+            referrerpolicy="no-referrer-when-downgrade"
+            >
+          </iframe>
           <div class="p-5">
               <a href="#">
                   <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{ $item->kegiatan }}</h5>
@@ -97,7 +105,7 @@
                   {{ $item->tempat }}
                 </li>
             </ul>
-              <a href="#" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-rose-600 rounded-lg hover:bg-rose-800 focus:ring-4 focus:outline-none focus:ring-rose-300 dark:bg-rose-600 dark:hover:bg-rose-700 dark:focus:ring-rose-800">
+              <a href="https://www.google.com/maps/search/?api=1&query={{ $item->lat }}%2C{{ $item->lng }}" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-rose-600 rounded-lg hover:bg-rose-800 focus:ring-4 focus:outline-none focus:ring-rose-300 dark:bg-rose-600 dark:hover:bg-rose-700 dark:focus:ring-rose-800">
                   Lihat di maps
                   <svg class="w-3.5 h-3.5 ml-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
                       <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
