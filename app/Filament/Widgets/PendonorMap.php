@@ -36,7 +36,7 @@ class PendonorMap extends MapWidget
          * You can use whatever query you want here, as long as it produces a set of records with your
          * lat and lng fields in them.
          */
-        $locations = \App\Models\Pendonor::all();
+        $locations = \App\Models\Pendonor::with('golongan_darah')->get();
 
         $data = [];
 
@@ -50,6 +50,9 @@ class PendonorMap extends MapWidget
              * You should also include an 'id' attribute for internal use by this plugin
              */
 
+            // dd($location->golongan_darah->nama);
+
+
             $data[] = [
                 'location'  => [
                     'lat' => $location->lat ? round(floatval($location->lat), static::$precision) : 0,
@@ -59,17 +62,17 @@ class PendonorMap extends MapWidget
                 'label' => $location->nama,
 
                 'id' => $location->getKey(),
-
                 /**
-             * Optionally you can provide custom icons for the map markers,
-             * either as scalable SVG's, or PNG, which doesn't support scaling.
-             * If you don't provide icons, the map will use the standard Google marker pin.
-             */
-                // 'icon' => [
-                //     'url' => url('images/dealership.svg'),
-                //     'type' => 'svg',
-                //     'scale' => [35, 35],
-                // ],
+                 * Optionally you can provide custom icons for the map markers,
+                 * either as scalable SVG's, or PNG, which doesn't support scaling.
+                 * If you don't provide icons, the map will use the standard Google marker pin.
+                 */
+
+                'icon' => [
+                    'url' => url('upload/images/' . $location->golongan_darah->nama . '-' . $location->rh . '.png'),
+                    'type' => 'png',
+                    'scale' => [35, 35],
+                ],
             ];
         }
 
