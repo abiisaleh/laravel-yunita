@@ -1,3 +1,7 @@
+@php
+  $nav = 'home'    
+@endphp
+
 @extends('layout')
 
 @section('content')
@@ -14,7 +18,7 @@
               </svg>
           </a>
           <a href="#" class="inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-gray-900 rounded-lg border border-gray-300 hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800">
-              Learn more
+              Selengkapnya
           </a>  
       </div>
   </div>
@@ -24,15 +28,15 @@
   <div class="max-w-screen-xl px-4 py-8 mx-auto text-center lg:py-16 lg:px-6">
       <dl class="grid max-w-screen-md gap-8 mx-auto text-gray-900 sm:grid-cols-3 dark:text-white">
           <div class="flex flex-col items-center justify-center">
-              <dt class="mb-2 text-3xl md:text-4xl font-extrabold">73M+</dt>
+              <dt class="mb-2 text-3xl md:text-4xl font-extrabold">{{ $stok['pendonor'] }}Rb+</dt>
               <dd class=" text-gray-500 dark:text-gray-400">Pendonor</dd>
           </div>
           <div class="flex flex-col items-center justify-center">
-              <dt class="mb-2 text-3xl md:text-4xl font-extrabold">1B+</dt>
+              <dt class="mb-2 text-3xl md:text-4xl font-extrabold">{{ $stok['darah'] }}Jt</dt>
               <dd class=" text-gray-500 dark:text-gray-400">Darah Masuk</dd>
           </div>
           <div class="flex flex-col items-center justify-center">
-              <dt class="mb-2 text-3xl md:text-4xl font-extrabold">4M+</dt>
+              <dt class="mb-2 text-3xl md:text-4xl font-extrabold">{{ $stok['pengguna'] }}00+</dt>
               <dd class=" text-gray-500 dark:text-gray-400">Penerima</dd>
           </div>
       </dl>
@@ -65,17 +69,17 @@
           <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-gray-900 dark:text-white">Informasi Donor</h2>
           <p class="font-normal text-gray-500 lg:mb-16 sm:text-xl dark:text-gray-400">Cek jadwal donor terdekat</p>
       </div> 
-      <div class="grid gap-8 mb-6 md:grid-cols-2">
+      <div class="grid gap-8 mb-6 md:grid-cols-3">
 
         @foreach ($donor as $item)
     
-        <div class="max-w-lg mx-auto bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+        <div class="min-w-sm w-full mx-auto bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
           <iframe 
-            class="rounded-t-lg"
+            class="rounded-t-lg w-full"
             src="https://www.google.com/maps/embed/v1/place?key={{ env('GOOGLE_MAPS_API_KEY') }}
             &q={{$item->lat}},{{$item->lng}}&region=id" 
             height="250" 
-            style="border:0; margin: 12px auto" 
+            style="border:0;" 
             allowfullscreen="true" 
             loading="lazy" 
             referrerpolicy="no-referrer-when-downgrade"
@@ -83,7 +87,7 @@
           </iframe>
           <div class="p-5">
               <a href="#">
-                  <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{ $item->kegiatan }}</h5>
+                  <h5 class="mb-2 text-xl font-bold tracking-tight text-gray-900 dark:text-white">{{ $item->kegiatan }}</h5>
               </a>
               <ul class="max-w-md space-y-1 text-gray-500 list-inside dark:text-gray-400 mb-4">
                 <li class="flex items-center">              
@@ -123,39 +127,25 @@
 
 <section class="bg-white dark:bg-gray-900" id="contact">
   <div class="py-8 lg:py-16 px-4 mx-auto max-w-screen-md">
-      <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-center text-gray-900 dark:text-white">Contact Us</h2>
+      <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-center text-gray-900 dark:text-white">Contact kami</h2>
       <p class="mb-8 lg:mb-16 font-normal text-center text-gray-500 dark:text-gray-400 sm:text-xl">Ada pertanyaan ? Silahkan beritahu kami melaului form dibawah ini.</p>
       <form action="pesan" method="POST" class="space-y-8">
           @csrf
           <div>
-              <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Your email</label>
-              <input name="email" type="email" id="email" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-rose-500 focus:border-rose-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-rose-500 dark:focus:border-rose-500 dark:shadow-sm-light" placeholder="name@domain.com" required>
+              <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Email</label>
+              <input name="email" type="email" id="email" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-rose-500 focus:border-rose-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-rose-500 dark:focus:border-rose-500 dark:shadow-sm-light" placeholder="nama@domain.com" required>
           </div>
           <div>
               <label for="subject" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Subject</label>
               <input name="subject" type="text" id="subject" class="block p-3 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 shadow-sm focus:ring-rose-500 focus:border-rose-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-rose-500 dark:focus:border-rose-500 dark:shadow-sm-light" placeholder="Beritahu kami bagaimana kami dapat membantu Anda" required>
           </div>
           <div class="sm:col-span-2">
-              <label for="message" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Your message</label>
+              <label for="message" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Pesan</label>
               <textarea name="message" id="message" rows="6" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg shadow-sm border border-gray-300 focus:ring-rose-500 focus:border-rose-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-rose-500 dark:focus:border-rose-500" placeholder="Tulis pesanmu.."></textarea>
           </div>
-          <button data-modal-target="popup-modal" data-modal-toggle="popup-modal" type="submit" class="py-3 px-5 text-sm font-medium text-center text-white rounded-lg bg-rose-600 sm:w-fit hover:bg-rose-800 focus:ring-4 focus:outline-none focus:ring-rose-300 dark:bg-rose-600 dark:hover:bg-rose-700 dark:focus:ring-rose-800">Send message</button>
+          <button type="submit" class="py-3 px-5 text-sm font-medium text-center text-white rounded-lg bg-rose-600 sm:w-fit hover:bg-rose-800 focus:ring-4 focus:outline-none focus:ring-rose-300 dark:bg-rose-600 dark:hover:bg-rose-700 dark:focus:ring-rose-800">Kirim pesan</button>
       </form>
   </div>
-
-<div id="popup-modal" tabindex="-1" class="fixed top-0 left-0 right-0 z-50 hidden p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
-    <div class="relative w-full max-w-md max-h-full">
-        <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
-            <div class="p-6 text-center">
-                <svg class="mx-auto mb-4 text-green-400 w-12 h-12" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m7 10 2 2 4-4m6 2a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
-                </svg>
-                <h3 class="text-lg font-bold text-gray-500 dark:text-gray-400">Pesan berhasil terkirim</h3>
-                <p class="mb-5 font-normal text-gray-500 dark:text-gray-400">pesan akan dibalas melalui email.</p>
-            </div>
-        </div>
-    </div>
-</div>
 
 </section>
 

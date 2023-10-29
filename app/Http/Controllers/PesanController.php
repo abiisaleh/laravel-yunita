@@ -17,6 +17,10 @@ class PesanController extends Controller
 
         Pesan::create($data);
 
-        return 'data berhasil dikirim';
+        return redirect()->to(
+            route('contact', [
+                'email' => $request->email
+            ])
+        );
     }
 }

@@ -11,8 +11,11 @@ class HomeController extends Controller
 {
     public static function index()
     {
-        $data['donor'] = JadwalKegiatan::all()->take(2);
+        $data['donor'] = JadwalKegiatan::all()->sortByDesc('tanggal')->take(3);
+        $data['stok']['pendonor'] = \App\Models\Pendonor::all()->count();
+        $data['stok']['darah'] = \App\Models\DarahMasuk::all()->count();
+        $data['stok']['pengguna'] = \App\Models\PenggunaDarah::all()->count();
 
-        return view('welcome', $data);
+        return view('pages.home', $data);
     }
 }
