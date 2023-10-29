@@ -18,10 +18,12 @@ class DarahMasuk extends Model
 
     protected static function booted(): void
     {
-        if (auth()->user()->role == 'pendonor') {
-            static::addGlobalScope('pendonor', function (Builder $query) {
-                $query->where('pendonor_id', auth()->user()->pendonor->id);
-            });
-        }
+        if (auth()->check()) {
+            if (auth()->user()->role == 'pendonor') {
+                static::addGlobalScope('pendonor', function (Builder $query) {
+                    $query->where('pendonor_id', auth()->user()->pendonor->id);
+                });
+            }
+        };
     }
 }
