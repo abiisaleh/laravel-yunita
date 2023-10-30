@@ -45,10 +45,10 @@
 
 <section class="bg-rose-600 dark:bg-gray-900">
   <div class="gap-16 items-center py-16 px-4 mx-auto max-w-screen-xl lg:grid lg:grid-cols-2 lg:py-16 lg:px-6">
-      <div class=" text-white sm:text-lg dark:text-gray-400">
+      <div class=" text-white text-lg dark:text-gray-400">
           <h2 class="mb-4 text-4xl tracking-tight font-extrabold dark:text-white">Mengapa Penting dan Bagaimana Cara Melakukannya</h2>
           <p class="mb-4">Donor darah adalah proses menyumbangkan darah secara sukarela untuk membantu orang lain yang membutuhkannya. Donor darah memiliki banyak manfaat, baik bagi penerima maupun pendonor. Beberapa manfaat donor darah adalah:
-            <ul class="max-w space-y-1 text-white list-disc list-inside" style="text-indent:-26px; margin-left:20px;">
+            <ul class="max-w space-y-1 text-white list-disc list-inside" style="text-indent:-25px; margin-left:20px;">
               <li>Membantu menyelamatkan nyawa orang yang mengalami kehilangan darah akibat kecelakaan, operasi, atau penyakit.</li>
               <li>Meningkatkan kesehatan jantung dan pembuluh darah, karena donor darah dapat mengurangi kekentalan darah dan menurunkan risiko penyakit kardiovaskular.</li>
               <li>Mendeteksi adanya penyakit atau infeksi yang mungkin tidak disadari, karena sebelum donor darah, pendonor akan menjalani pemeriksaan kesehatan dan tes laboratorium.</li>
@@ -57,8 +57,8 @@
           </p>
       </div>
       <div class="grid grid-cols-2 gap-4 mt-8">
-          <img class="w-full rounded-lg" src="https://images.unsplash.com/photo-1615461065624-21b562ee5566?auto=format&fit=crop&q=80&w=800&h=1080&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="office content 1">
-          <img class="mt-4 w-full lg:mt-10 rounded-lg" src="https://images.unsplash.com/photo-1460672985063-6764ac8b9c74?auto=format&fit=crop&q=80&w=800&h=1080&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="office content 2">
+          <img class="w-full rounded-lg" src="/upload/images/donor-darah-foto.webp" alt="gambar proses donor darah">
+          <img class="mt-4 w-full lg:mt-10 rounded-lg" src="/upload/images/donor-darah-jantung.webp" alt="gamabr jantung">
       </div>
   </div>
 </section>

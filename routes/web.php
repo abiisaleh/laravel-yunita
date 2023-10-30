@@ -28,3 +28,4 @@ Route::get('pesan-terkirim', function (Request $request) {
 })->name('contact');
 
 Route::post('pesan', [HomeController::class, 'send']);
+Route::get('stok', [HomeController::class, 'stok']);

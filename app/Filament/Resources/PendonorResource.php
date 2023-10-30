@@ -9,16 +9,20 @@ use Cheesegrits\FilamentGoogleMaps\Fields\Map;
 use Filament\Forms;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Fieldset;
+use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
+use Filament\Forms\Get;
+use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use pxlrbt\FilamentExcel\Actions\Tables\ExportBulkAction;
@@ -96,7 +100,6 @@ class PendonorResource extends Resource
     {
         return $table
             ->columns([
-                //
                 TextColumn::make('nama')
                     ->searchable(),
                 TextColumn::make('jenis_kelamin'),
@@ -104,9 +107,11 @@ class PendonorResource extends Resource
                 TextColumn::make('jenis_darah.nama'),
             ])
             ->filters([
-                SelectFilter::make('golongan_darah.nama')
+                SelectFilter::make('golongan_darah_id')
+                    ->relationship('golongan_darah', 'nama')
                     ->label('Golongan Darah'),
-                SelectFilter::make('jenis_darah.nama')
+                SelectFilter::make('jenis_darah_id')
+                    ->relationship('jenis_darah', 'nama')
                     ->label('Jenis Darah'),
             ])
             ->actions([
@@ -115,8 +120,29 @@ class PendonorResource extends Resource
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
+                    ExportBulkAction::make(),
+                    Tables\Actions\BulkAction::make('send_notification')
+                        ->icon('heroicon-m-bell')
+                        ->form([
+                            TextInput::make('judul')
+                                ->required(),
+                            Textarea::make('pesan'),
+                        ])
+                        ->action(function (Collection $records, array $data) {
+                            foreach ($records as $record) {
+                                Notification::make()
+                                    ->title($data['judul'])
+                                    ->body($data['pesan'])
+                                    ->info()
+                                    ->sendToDatabase(\App\Models\User::where('id', $record->user_id)->get());
+                            }
+                        })
+                        ->successNotification(
+                            Notification::make()
+                                ->title('Berhasil terkirim')
+                                ->success()
+                        ),
                 ]),
-                ExportBulkAction::make(),
             ]);
     }
 
