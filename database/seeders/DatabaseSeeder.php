@@ -14,12 +14,21 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // \App\Models\User::factory(10)->create();
+        //admin acount
+        $user = \App\Models\User::factory()->create([
+            'name' => 'admin',
+            'email' => 'admin@demo.com',
+            'password' => 'demo1234',
+            'role' => 'admin',
+        ]);
 
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
+        //adminsuper acount
+        $user = \App\Models\User::factory()->create([
+            'name' => 'admin super',
+            'email' => 'adminsuper@demo.com',
+            'password' => 'demo1234',
+            'role' => 'super',
+        ]);
 
         $data = ['A', 'B', 'AB', 'O'];
         foreach ($data as $value) {
@@ -60,19 +69,44 @@ class DatabaseSeeder extends Seeder
         }
 
         $data = [
-            "RS Provita Jayapura",
-            "RS Umum Daerah Yowari Sentani",
-            "RS Bhayangkara Jayapura",
-            "RS Dian Harapan Jayapura",
-            "RS Jiwa Abepura"
+            "Provita Jayapura",
+            "Umum Daerah Yowari Sentani",
+            "Bhayangkara Jayapura",
+            "Dian Harapan Jayapura",
+            "Jiwa Abepura"
         ];
 
         foreach ($data as $value) {
             \App\Models\RumahSakit::create(['nama' => $value]);
         }
 
-        // \App\Models\Pendonor::factory()
-        //     ->count(100)
-        //     ->create();
+        $data = [
+            "WB",
+            "PRC",
+            "LP",
+            "TC",
+        ];
+
+        foreach ($data as $value) {
+            \App\Models\JenisDarah::create(['nama' => $value]);
+        }
+
+        $data = [
+            ["kegiatan" => "Donor Darah Bersama Polri", "tanggal" => fake()->dateTimeBetween('-1 years'), "waktu" => fake()->time(), "tempat" => "Polsek Abepura", "lat" => "-2.6118959", "lng" => "140.6619409"],
+            ["kegiatan" => "Donor Darah Bersama Mahasiswa USTJ", "tanggal" => fake()->dateTimeBetween('-1 years'), "waktu" => fake()->time(), "tempat" => "Aula USTJ", "lat" => "-2.604784", "lng" => "140.6576806"],
+            ["kegiatan" => "Donor Darah Hari Pahlawan", "tanggal" => fake()->dateTimeBetween('-1 years'), "waktu" => fake()->time(), "tempat" => "RS Bhayangkara", "lat" => "-2.5914185", "lng" => "140.6741743"],
+            ["kegiatan" => "Donor Darah Hari Kemerdekaan", "tanggal" => fake()->dateTimeBetween('-1 years'), "waktu" => fake()->time(), "tempat" => "Lapangan Trikora", "lat" => "-2.6077396", "lng" => "140.6557462"],
+            ["kegiatan" => "Donor Darah Bersama Mahasiswa UNCEN", "tanggal" => fake()->dateTimeBetween('-1 years'), "waktu" => fake()->time(), "tempat" => "Auditoriun UNCEN", "lat" => "-2.6105398", "lng" => "140.659636"],
+        ];
+
+        foreach ($data as $value) {
+            \App\Models\JadwalKegiatan::create($value);
+        }
+
+        //buat 5x10 pendonor 
+        for ($i = 0; $i < 5; $i++) {
+            //buat 10 data pendonor
+            $this->call(PendonorSeeder::class);
+        }
     }
 }

@@ -17,6 +17,8 @@ class UserFactory extends Factory
      */
     public function definition(): array
     {
+        fake()->locale('id');
+
         return [
             'name' => fake()->name(),
             'email' => fake()->unique()->safeEmail(),

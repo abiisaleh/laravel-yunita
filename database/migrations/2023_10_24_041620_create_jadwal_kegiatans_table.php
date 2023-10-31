@@ -17,6 +17,8 @@ return new class extends Migration
             $table->date('tanggal');
             $table->time('waktu');
             $table->string('tempat');
+            $table->string('lat');
+            $table->string('lng');
             $table->timestamps();
         });
     }

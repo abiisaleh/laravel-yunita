@@ -18,22 +18,12 @@ class PendonorFactory extends Factory
      */
     public function definition(): array
     {
-        $this->faker->locale('id');
-
-        $gender = $this->faker->randomElement(['laki-laki', 'perempuan']);
-
-        if ($gender == 'laki-laki') {
-            $name = $this->faker->name('man');
-        } else {
-            $name = $this->faker->name('woman');
-        }
-
         return [
-            'nama' => $name,
+            'nama' => $this->faker->name,
             'alamat' => $this->faker->address,
             'lat' => $this->faker->latitude(-2.594471, -2.520189),
             'lng' => $this->faker->longitude(140.688591, 140.724986),
-            'jenis_kelamin' => $gender,
+            'jenis_kelamin' => 'laki-laki',
             'created_at' => $this->faker->dateTimeBetween('-2 years', 'now'),
             'tanggal_lahir' => $this->faker->dateTimeBetween('-40 years', '15 years'),
             'rh' => $this->faker->randomElement(['positive', 'negative']),

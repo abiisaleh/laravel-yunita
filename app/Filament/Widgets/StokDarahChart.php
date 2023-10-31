@@ -24,6 +24,16 @@ class StokDarahChart extends ChartWidget
                     'backgroundColor' => '#fdae4b50',
                     'borderColor' => '#fdae4b',
                 ],
+                [
+                    'label' => 'Rh +',
+                    'data' => [0, 10, 5, 29],
+                ],
+                [
+                    'label' => 'Rh -',
+                    'data' => [1, 6, 2, 12],
+                    'backgroundColor' => '#fdae4b50',
+                    'borderColor' => '#fdae4b',
+                ],
             ],
             'labels' => ['A', 'B', 'AB', 'O'],
         ];
