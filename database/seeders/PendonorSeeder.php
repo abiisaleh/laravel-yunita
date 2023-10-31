@@ -15,8 +15,16 @@ class PendonorSeeder extends Seeder
         for ($i = 0; $i < 10; $i++) {
             $tanggal_lahir = fake()->dateTimeBetween('-40 years', '15 years');
 
+            $gender = fake()->randomElement(['laki-laki', 'perempuan']);
+
+            if ($gender == 'perempuan') {
+                $name = fake()->name('female');
+            } else {
+                $name = fake()->name('male');
+            }
+
             $user = \App\Models\User::factory()->create([
-                'name' => fake()->name('male'),
+                'name' => $name,
                 'password' => $tanggal_lahir->format('dmY')
             ]);
 
@@ -24,7 +32,7 @@ class PendonorSeeder extends Seeder
                 ->create([
                     'nama' => $user->name,
                     'tanggal_lahir' => $tanggal_lahir,
-                    'jenis_kelamin' => 'laki-laki',
+                    'jenis_kelamin' => $gender,
                     'user_id' => $user->id
                 ]);
 
@@ -36,6 +44,7 @@ class PendonorSeeder extends Seeder
             \App\Models\PenggunaDarah::factory()
                 ->create([
                     'darah_masuk_id' => $darahMasuk->id,
+                    'jenis_kelamin' => $gender,
                 ]);
         }
 
