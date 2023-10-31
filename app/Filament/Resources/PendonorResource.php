@@ -100,6 +100,8 @@ class PendonorResource extends Resource
     {
         return $table
             ->columns([
+                TextColumn::make('user.email')
+                    ->copyable(),
                 TextColumn::make('nama')
                     ->searchable(),
                 TextColumn::make('jenis_kelamin'),
