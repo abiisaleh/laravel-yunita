@@ -13,7 +13,7 @@ class PendonorSeeder extends Seeder
     public function run(): void
     {
         for ($i = 0; $i < 10; $i++) {
-            $tanggal_lahir = fake()->dateTimeBetween('-40 years', '15 years');
+            $tanggal_lahir = fake()->dateTimeBetween('-40 years', '-15 years');
 
             $gender = fake()->randomElement(['laki-laki', 'perempuan']);
 
