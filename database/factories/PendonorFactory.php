@@ -25,7 +25,7 @@ class PendonorFactory extends Factory
             'lng' => $this->faker->longitude(140.688591, 140.724986),
             'jenis_kelamin' => 'laki-laki',
             'created_at' => $this->faker->dateTimeBetween('-2 years', 'now'),
-            'tanggal_lahir' => $this->faker->dateTimeBetween('-40 years', '15 years'),
+            'tanggal_lahir' => $this->faker->dateTimeBetween('-40 years', '-15 years'),
             'rh' => $this->faker->randomElement(['positive', 'negative']),
             'golongan_darah_id' => \App\Models\GolonganDarah::all()->random()->id,
             'jenis_darah_id' => \App\Models\JenisDarah::all()->random()->id,

@@ -41,11 +41,13 @@ class PendonorSeeder extends Seeder
                     'pendonor_id' => $pendonor->id
                 ]);
 
-            \App\Models\PenggunaDarah::factory()
-                ->create([
-                    'darah_masuk_id' => $darahMasuk->id,
-                    'jenis_kelamin' => $gender,
-                ]);
+            if (rand(0, 1)) {
+                \App\Models\PenggunaDarah::factory()
+                    ->create([
+                        'darah_masuk_id' => $darahMasuk->id,
+                        'jenis_kelamin' => $gender,
+                    ]);
+            }
         }
 
         \App\Models\DarahMasuk::factory(rand(1, 5))
