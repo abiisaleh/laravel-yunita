@@ -6,10 +6,12 @@ use App\Filament\Resources\JenisDarahResource\Pages;
 use App\Filament\Resources\JenisDarahResource\RelationManagers;
 use App\Models\JenisDarah;
 use Filament\Forms;
+use Filament\Forms\Components\ColorPicker;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Columns\ColorColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
@@ -30,7 +32,7 @@ class JenisDarahResource extends Resource
         return $form
             ->schema([
                 TextInput::make('nama')->required(),
-                //
+                ColorPicker::make('warna'),
             ]);
     }
 
@@ -39,7 +41,7 @@ class JenisDarahResource extends Resource
         return $table
             ->columns([
                 TextColumn::make('nama'),
-                //
+                ColorColumn::make('warna')
             ])
             ->filters([
                 //

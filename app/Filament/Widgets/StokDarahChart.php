@@ -2,9 +2,8 @@
 
 namespace App\Filament\Widgets;
 
-use App\Models\DarahMasuk;
-use Filament\Support\Colors\Color;
 use Filament\Widgets\ChartWidget;
+use Illuminate\Support\Facades\DB;
 
 class StokDarahChart extends ChartWidget
 {
@@ -12,30 +11,30 @@ class StokDarahChart extends ChartWidget
 
     protected function getData(): array
     {
+        $jenisDarah = \App\Models\JenisDarah::all()->toArray();
+
+        foreach ($jenisDarah as $value) {
+            $data = DB::table('darah_masuks')
+                ->join('pendonors', 'darah_masuks.pendonor_id', '=', 'pendonors.id')
+                ->join('golongan_darahs', 'pendonors.golongan_darah_id', '=', 'golongan_darahs.id')
+                ->join('jenis_darahs', 'pendonors.jenis_darah_id', '=', 'jenis_darahs.id')
+                ->groupBy('golongan_darahs.nama', 'jenis_darahs.nama')
+                ->select('golongan_darahs.nama as golongan_darah', 'jenis_darahs.nama as jenis_darah', DB::raw('COUNT(darah_masuks.id) as jumlah'))
+                ->where('jenis_darahs.nama', '=', $value['nama'])
+                ->pluck('jumlah')
+                ->toArray();
+
+            $dataset[] = [
+                'label' => $value['nama'],
+                'data' => $data,
+                'backgroundColor' => $value['warna'] . '50',
+                'borderColor' => $value['warna'],
+            ];
+        }
+
         return [
-            'datasets' => [
-                [
-                    'label' => 'Rh +',
-                    'data' => [0, 10, 5, 29],
-                ],
-                [
-                    'label' => 'Rh -',
-                    'data' => [1, 6, 2, 12],
-                    'backgroundColor' => '#fdae4b50',
-                    'borderColor' => '#fdae4b',
-                ],
-                [
-                    'label' => 'Rh +',
-                    'data' => [0, 10, 5, 29],
-                ],
-                [
-                    'label' => 'Rh -',
-                    'data' => [1, 6, 2, 12],
-                    'backgroundColor' => '#fdae4b50',
-                    'borderColor' => '#fdae4b',
-                ],
-            ],
-            'labels' => ['A', 'B', 'AB', 'O'],
+            'datasets' => $dataset,
+            'labels' => \App\Models\GolonganDarah::all()->pluck('nama'),
         ];
     }
 
