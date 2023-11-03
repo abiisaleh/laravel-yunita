@@ -120,8 +120,6 @@ class HomeController extends Controller
             ];
         }
 
-        // dd($dataset);
-
         return view('pages.stok', [
             'stok_darah' => response()->json($stok_darah)->content(),
             'stok_darah_2' => $dataset,
