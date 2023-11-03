@@ -66,16 +66,17 @@ class HomeController extends Controller
 
         //grafik batang
         $golDarah = \App\Models\GolonganDarah::all()->toArray();
+        $jenisDarah = \App\Models\JenisDarah::all()->pluck('nama')->toArray();
 
-        foreach ($golDarah as $value) {
+        foreach ($golDarah as $record) {
             $darahMasuk = DB::table('darah_masuks')
                 ->join('pendonors', 'darah_masuks.pendonor_id', '=', 'pendonors.id')
                 ->join('golongan_darahs', 'pendonors.golongan_darah_id', '=', 'golongan_darahs.id')
                 ->join('jenis_darahs', 'pendonors.jenis_darah_id', '=', 'jenis_darahs.id')
                 ->groupBy('golongan_darahs.nama', 'jenis_darahs.nama')
                 ->select('golongan_darahs.nama as golongan_darah', 'jenis_darahs.nama as jenis_darah', DB::raw('COUNT(darah_masuks.id) as jumlah'))
-                ->where('golongan_darahs.nama', '=', $value['nama'])
-                ->pluck('jumlah')
+                ->where('golongan_darahs.nama', '=', $record['nama'])
+                ->pluck('jumlah', 'jenis_darah')
                 ->toArray();
 
             $darahKeluar = DB::table('pengguna_darahs')
@@ -85,25 +86,46 @@ class HomeController extends Controller
                 ->join('jenis_darahs', 'pendonors.jenis_darah_id', '=', 'jenis_darahs.id')
                 ->groupBy('golongan_darahs.nama', 'jenis_darahs.nama')
                 ->select('golongan_darahs.nama as golongan_darah', 'jenis_darahs.nama as jenis_darah', DB::raw('COUNT(pengguna) as jumlah'))
-                ->where('golongan_darahs.nama', '=', $value['nama'])
-                ->pluck('jumlah')
+                ->where('golongan_darahs.nama', '=', $record['nama'])
+                ->pluck('jumlah', 'jenis_darah')
                 ->toArray();
 
-            $diff = array_map(function ($a, $b) {
-                return $a - $b;
-            }, $darahMasuk, $darahKeluar);
+            $result = [];
+
+            //menghitung stok darah dari darah masuk - darah keluar
+            foreach ($darahMasuk as $key => $value) {
+                if (array_key_exists($key, $darahKeluar)) {
+                    $result[$key] = $value - $darahKeluar[$key];
+                } else {
+                    $result[$key] = $value;
+                }
+            }
+
+            foreach ($darahKeluar as $key => $value) {
+                if (!array_key_exists($key, $darahMasuk)) {
+                    $result[$key] = -$value;
+                }
+            }
+
+            $data = [];
+
+            foreach ($jenisDarah as $value) {
+                $data[] = $result[$value] ?? 0;
+            }
 
             $dataset[] = [
-                'name' => $value['nama'],
-                'color' => $value['warna'],
-                'data' => $diff,
+                'name' => $record['nama'],
+                'color' => $record['warna'],
+                'data' => $data,
             ];
         }
+
+        // dd($dataset);
 
         return view('pages.stok', [
             'stok_darah' => response()->json($stok_darah)->content(),
             'stok_darah_2' => $dataset,
-            'jenis_darah' => \App\Models\JenisDarah::all()->pluck('nama')->toArray(),
+            'jenis_darah' => $jenisDarah,
             'jumlah_pendonor' => \App\Models\Pendonor::all()->count(),
         ]);
     }
