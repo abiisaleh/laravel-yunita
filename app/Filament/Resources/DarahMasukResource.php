@@ -62,10 +62,10 @@ class DarahMasukResource extends Resource
                     ->date('d/m/Y'),
             ])
             ->filters([
-                SelectFilter::make('pendonor.golongan_darah.nama')
-                    ->label('Golongan Darah'),
-                SelectFilter::make('pendonor.jenis_darah.nama')
-                    ->label('Jenis Darah'),
+                SelectFilter::make('golongan_darah')
+                    ->relationship('pendonor.golongan_darah', 'nama'),
+                SelectFilter::make('jenis_darah')
+                    ->relationship('pendonor.jenis_darah', 'nama'),
                 DateRangeFilter::make('tanggal'),
 
             ])

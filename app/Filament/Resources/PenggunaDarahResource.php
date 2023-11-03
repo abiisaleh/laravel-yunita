@@ -38,7 +38,7 @@ class PenggunaDarahResource extends Resource
             ->schema([
                 TextInput::make('pengguna'),
                 Select::make('darah_masuk_id')
-                    ->relationship('darah_masuk', 'no_selang')
+                    ->relationship('darah_masuk', 'no_selang', fn (Builder $query) => $query->whereDoesntHave('pengguna_darah'))
                     ->getOptionLabelFromRecordUsing(fn (Model $record) => "({$record->no_selang}) {$record->pendonor->nama} - {$record->pendonor->golongan_darah->nama}/{$record->pendonor->jenis_darah->nama}")
                     ->searchable()
                     ->preload(),
@@ -74,10 +74,10 @@ class PenggunaDarahResource extends Resource
                 TextColumn::make('jumlah_kolf'),
             ])
             ->filters([
-                SelectFilter::make('darah_masuk.pendonor.golongan_darah.nama')
-                    ->label('Golongan Darah'),
-                SelectFilter::make('darah_masuk.pendonor.jenis_darah.nama')
-                    ->label('Jenis Darah'),
+                SelectFilter::make('golongan_darah')
+                    ->relationship('darah_masuk.pendonor.golongan_darah', 'nama'),
+                SelectFilter::make('jenis_darah')
+                    ->relationship('darah_masuk.pendonor.jenis_darah', 'nama'),
                 DateRangeFilter::make('tanggal'),
             ])
             ->actions([

@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class DarahMasuk extends Model
 {
@@ -14,6 +15,11 @@ class DarahMasuk extends Model
     public function pendonor(): BelongsTo
     {
         return $this->BelongsTo(Pendonor::class);
+    }
+
+    public function pengguna_darah(): HasOne
+    {
+        return $this->hasOne(PenggunaDarah::class);
     }
 
     protected static function booted(): void
