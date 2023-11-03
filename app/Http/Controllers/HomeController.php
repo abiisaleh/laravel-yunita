@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Database\Query\Builder;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
@@ -43,16 +45,66 @@ class HomeController extends Controller
 
     public static function stok()
     {
-        $darah = \Illuminate\Support\Facades\DB::table('darah_masuks')
+        //grafik donat
+        $darahMasuk = DB::table('darah_masuks')
             ->join('pendonors', 'darah_masuks.pendonor_id', '=', 'pendonors.id')
             ->join('golongan_darahs', 'pendonors.golongan_darah_id', '=', 'golongan_darahs.id', 'right outer')
-            ->select('golongan_darahs.nama as golongan_darah', \Illuminate\Support\Facades\DB::raw('COUNT(darah_masuks.id) as jumlah_darah_masuk'))
+            ->select('golongan_darahs.nama as golongan_darah', DB::raw('COUNT(darah_masuks.id) as jumlah'))
             ->groupBy('golongan_darahs.nama');
 
-        $stok_darah = $darah->get();
+        $darahKeluar = DB::table('pengguna_darahs')
+            ->join('darah_masuks', 'darah_masuk_id', '=', 'darah_masuks.id')
+            ->join('pendonors', 'darah_masuks.pendonor_id', '=', 'pendonors.id')
+            ->join('golongan_darahs', 'pendonors.golongan_darah_id', '=', 'golongan_darahs.id', 'right outer')
+            ->select('golongan_darahs.nama as golongan_darah', DB::raw('COUNT(darah_masuks.id) as jumlah'))
+            ->groupBy('golongan_darahs.nama');
+
+        $stok_darah = array_map(function ($a, $b) {
+            return $a - $b;
+        }, $darahMasuk->pluck('jumlah')->toArray(), $darahKeluar->pluck('jumlah')->toArray());
+
+
+        //grafik batang
+        $golDarah = \App\Models\GolonganDarah::all()->toArray();
+
+        foreach ($golDarah as $value) {
+            $darahMasuk = DB::table('darah_masuks')
+                ->join('pendonors', 'darah_masuks.pendonor_id', '=', 'pendonors.id')
+                ->join('golongan_darahs', 'pendonors.golongan_darah_id', '=', 'golongan_darahs.id')
+                ->join('jenis_darahs', 'pendonors.jenis_darah_id', '=', 'jenis_darahs.id')
+                ->groupBy('golongan_darahs.nama', 'jenis_darahs.nama')
+                ->select('golongan_darahs.nama as golongan_darah', 'jenis_darahs.nama as jenis_darah', DB::raw('COUNT(darah_masuks.id) as jumlah'))
+                ->where('golongan_darahs.nama', '=', $value['nama'])
+                ->pluck('jumlah')
+                ->toArray();
+
+            $darahKeluar = DB::table('pengguna_darahs')
+                ->join('darah_masuks', 'darah_masuk_id', '=', 'darah_masuks.id')
+                ->join('pendonors', 'darah_masuks.pendonor_id', '=', 'pendonors.id')
+                ->join('golongan_darahs', 'pendonors.golongan_darah_id', '=', 'golongan_darahs.id')
+                ->join('jenis_darahs', 'pendonors.jenis_darah_id', '=', 'jenis_darahs.id')
+                ->groupBy('golongan_darahs.nama', 'jenis_darahs.nama')
+                ->select('golongan_darahs.nama as golongan_darah', 'jenis_darahs.nama as jenis_darah', DB::raw('COUNT(pengguna) as jumlah'))
+                ->where('golongan_darahs.nama', '=', $value['nama'])
+                ->pluck('jumlah')
+                ->toArray();
+
+            $diff = array_map(function ($a, $b) {
+                return $a - $b;
+            }, $darahMasuk, $darahKeluar);
+
+            $dataset[] = [
+                'name' => $value['nama'],
+                'color' => $value['warna'],
+                'data' => $diff,
+            ];
+        }
 
         return view('pages.stok', [
-            'stok_darah' => $stok_darah->pluck('jumlah_darah_masuk')->toJson(),
+            'stok_darah' => response()->json($stok_darah)->content(),
+            'stok_darah_2' => $dataset,
+            'jenis_darah' => \App\Models\JenisDarah::all()->pluck('nama')->toArray(),
+            'jumlah_pendonor' => \App\Models\Pendonor::all()->count(),
         ]);
     }
 }

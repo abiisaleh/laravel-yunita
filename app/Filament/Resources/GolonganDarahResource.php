@@ -6,10 +6,12 @@ use App\Filament\Resources\GolonganDarahResource\Pages;
 use App\Filament\Resources\GolonganDarahResource\RelationManagers;
 use App\Models\GolonganDarah;
 use Filament\Forms;
+use Filament\Forms\Components\ColorPicker;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Columns\ColorColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
@@ -30,6 +32,7 @@ class GolonganDarahResource extends Resource
         return $form
             ->schema([
                 TextInput::make('nama')->required(),
+                ColorPicker::make('warna'),
             ]);
     }
 
@@ -38,12 +41,13 @@ class GolonganDarahResource extends Resource
         return $table
             ->columns([
                 TextColumn::make('nama'),
+                ColorColumn::make('warna'),
             ])
             ->filters([
                 //
             ])
             ->actions([
-                // Tables\Actions\EditAction::make(),
+                Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([

@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('golongan_darahs', function (Blueprint $table) {
             $table->id();
             $table->string('nama');
+            $table->string('warna')->default('#FF5A5F');
             $table->timestamps();
         });
     }

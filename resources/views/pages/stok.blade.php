@@ -55,7 +55,7 @@
           </svg>
         </div>
         <div>
-          <h5 class="leading-none text-2xl font-bold text-gray-900 dark:text-white pb-1">3.4k</h5>
+          <h5 class="leading-none text-2xl font-bold text-gray-900 dark:text-white pb-1">{{$jumlah_pendonor}}</h5>
           <p class="text-sm font-normal text-gray-500 dark:text-gray-400">Jumlah pendonor yang terdaftar</p>
         </div>
       </div>
@@ -81,26 +81,18 @@
       const options = {
             colors: ["#1A56DB", "#FDBA8C"],
             series: [
+              @foreach ($stok_darah_2 as $value)
               {
-                name: "Positive",
-                color: "#ff153c",
+                name: '{{$value['name']}}',
+                color: '{{$value['color']}}',
                 data: [
-                  { x: "A", y: 231 },
-                  { x: "B", y: 122 },
-                  { x: "AB", y: 63 },
-                  { x: "O", y: 421 },
+                  { x: "{{$jenis_darah[0]}}", y: '{{$value['data'][0] ?? 0}}' },
+                  { x: "{{$jenis_darah[1]}}", y: '{{$value['data'][1] ?? 0}}' },
+                  { x: "{{$jenis_darah[2]}}", y: '{{$value['data'][2] ?? 0}}' },
+                  { x: "{{$jenis_darah[3]}}", y: '{{$value['data'][3] ?? 0}}' },
                 ],
               },
-              {
-                name: "Negative",
-                color: "#FDBA8C",
-                data: [
-                  { x: "A", y: 232 },
-                  { x: "B", y: 113 },
-                  { x: "AB", y: 341 },
-                  { x: "O", y: 224 },
-                ],
-              },
+              @endforeach
             ],
             chart: {
               type: "bar",
