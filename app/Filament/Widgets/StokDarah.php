@@ -27,9 +27,18 @@ class StokDarah extends BaseWidget
                 $chart[] = $value;
             }
 
-            $result['chart'] = $chart;
+            $result['chart'] = $chart ?? [0];
 
             $perubahan = 0;
+
+            if ($result['chart'] == [0]) {
+
+                $result['desc'] = 'Belum ada';
+                $result['icon'] = '';
+                $result['color'] = '';
+
+                return $result;
+            }
 
             foreach ($chart as $value) {
                 $perubahan = $value - $perubahan;

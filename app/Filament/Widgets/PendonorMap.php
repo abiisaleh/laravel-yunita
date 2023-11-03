@@ -20,6 +20,14 @@ class PendonorMap extends MapWidget
 
     protected int | string | array $columnSpan = 'full';
 
+    public static function canView(): bool
+    {
+        if (auth()->user()->role == 'pendonor') {
+            return false;
+        }
+        return true;
+    }
+
     public array $controls = [
         'mapTypeControl'    => false,
         'scaleControl'      => true,
@@ -49,8 +57,6 @@ class PendonorMap extends MapWidget
              *
              * You should also include an 'id' attribute for internal use by this plugin
              */
-
-            // dd($location->golongan_darah->nama);
 
 
             $data[] = [

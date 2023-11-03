@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Builder;
 
 class PenggunaDarah extends Model
 {
@@ -18,5 +19,16 @@ class PenggunaDarah extends Model
     public function rumah_sakit(): BelongsTo
     {
         return $this->BelongsTo(RumahSakit::class);
+    }
+
+    protected static function booted(): void
+    {
+        if (auth()->check()) {
+            if (auth()->user()->role == 'pendonor') {
+                static::addGlobalScope('pendonor', function (Builder $query) {
+                    $query->join('darah_masuks', 'darah_masuk_id', '=', 'darah_masuks.id')->where('pendonor_id', auth()->user()->pendonor->id);
+                });
+            }
+        };
     }
 }
