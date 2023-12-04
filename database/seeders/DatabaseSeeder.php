@@ -30,9 +30,14 @@ class DatabaseSeeder extends Seeder
             'role' => 'super',
         ]);
 
-        $data = ['A', 'B', 'AB', 'O'];
+        $data = [
+            ['nama' => 'A', 'warna' => '#FF5A5F'],
+            ['nama' => 'B', 'warna' => '#ffc371'],
+            ['nama' => 'AB', 'warna' => '#74b9ff'],
+            ['nama' => 'O', 'warna' => '#4bc08f']
+        ];
         foreach ($data as $value) {
-            \App\Models\GolonganDarah::create(['nama' => $value]);
+            \App\Models\GolonganDarah::create(['nama' => $value['nama'], 'warna' => $value['warna']]);
         }
 
         $data = [
@@ -81,14 +86,14 @@ class DatabaseSeeder extends Seeder
         }
 
         $data = [
-            "WB",
-            "PRC",
-            "LP",
-            "TC",
+            ["nama" => "WB", "warna" => "#fc4c4c"],
+            ["nama" => "PRC", "warna" => "#fdae4b"],
+            ["nama" => "LP", "warna" => "#fceb4c"],
+            ["nama" => "TC", "warna" => "#fc4c91"],
         ];
 
         foreach ($data as $value) {
-            \App\Models\JenisDarah::create(['nama' => $value]);
+            \App\Models\JenisDarah::create(['nama' => $value['nama'], 'warna' => $value['warna']]);
         }
 
         $data = [
