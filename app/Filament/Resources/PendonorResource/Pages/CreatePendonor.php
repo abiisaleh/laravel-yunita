@@ -14,7 +14,7 @@ class CreatePendonor extends CreateRecord
 
     protected function handleRecordCreation(array $data): Model
     {
-
+        // dd($data);
         $record = new ($this->getModel())([
             'nama' => $data['nama'],
             'jenis_kelamin' => $data['jenis_kelamin'],
@@ -23,6 +23,7 @@ class CreatePendonor extends CreateRecord
             'jenis_darah_id' => $data['jenis_darah_id'],
             'alamat' => $data['alamat'],
             'tanggal_lahir' => $data['tanggal_lahir'],
+            'location' => $data['location'],
         ]);
 
         $user = $record->user()->create([
