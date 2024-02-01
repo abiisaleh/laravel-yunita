@@ -88,7 +88,6 @@ class PendonorResource extends Resource
                             ])
                             ->clickable()
                             ->defaultLocation([-2.5651354, 140.5986246])
-                            ->autocomplete('alamat')
                             ->defaultZoom(12)
                             ->columnSpanFull(),
                     ]),
@@ -107,6 +106,8 @@ class PendonorResource extends Resource
                 TextColumn::make('jenis_kelamin'),
                 TextColumn::make('golongan_darah.nama'),
                 TextColumn::make('jenis_darah.nama'),
+                TextColumn::make('created_at')
+                    ->label('Tgl donor'),
             ])
             ->filters([
                 SelectFilter::make('golongan_darah_id')

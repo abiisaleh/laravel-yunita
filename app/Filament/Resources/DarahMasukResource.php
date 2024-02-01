@@ -28,7 +28,7 @@ class DarahMasukResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-archive-box-arrow-down';
 
-    protected static ?string $pluralLabel = 'Darah Masuk';
+    protected static ?string $pluralLabel = 'No Selang';
 
     protected static ?int $navigationSort = 1;
 
@@ -59,6 +59,7 @@ class DarahMasukResource extends Resource
                     ->label('Rhesus'),
                 TextColumn::make('pendonor.jenis_darah.nama'),
                 TextColumn::make('tanggal')
+                    ->label('Tgl pemgambilan darah')
                     ->date('d/m/Y'),
             ])
             ->filters([
