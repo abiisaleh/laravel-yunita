@@ -55,8 +55,7 @@ class PenggunaDarahResource extends Resource
                 TextInput::make('jumlah_kolf')
                     ->numeric()
                     ->minValue(0),
-                DatePicker::make('tanggal')
-                    ->label('Tgl penggunaan darah'),
+                DatePicker::make('tanggal'),
             ]);
     }
 
@@ -66,6 +65,7 @@ class PenggunaDarahResource extends Resource
             ->columns([
                 //
                 TextColumn::make('tanggal')
+                    ->label('Tgl penggunaan darah')
                     ->date('d/m/Y'),
                 TextColumn::make('pengguna')->searchable(),
                 TextColumn::make('rumah_sakit.nama')->searchable(),

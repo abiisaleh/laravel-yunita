@@ -107,7 +107,8 @@ class PendonorResource extends Resource
                 TextColumn::make('golongan_darah.nama'),
                 TextColumn::make('jenis_darah.nama'),
                 TextColumn::make('created_at')
-                    ->label('Tgl donor'),
+                    ->label('Tgl donor')
+                    ->date('d/m/Y'),
             ])
             ->filters([
                 SelectFilter::make('golongan_darah_id')
