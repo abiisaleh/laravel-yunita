@@ -11,13 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('pengguna_darahs', function (Blueprint $table) {
+        Schema::create('darah_masuk_pengguna_darah', function (Blueprint $table) {
             $table->id();
-            $table->string('pengguna');
-            $table->enum('jenis_kelamin', ['laki-laki', 'perempuan']);
-            $table->integer('jumlah_kolf');
-            $table->date('tanggal');
-            $table->foreignId('rumah_sakit_id')->cascadeOnDelete();
+            $table->foreignId('darah_masuk_id')->cascadeOnDelete();
+            $table->foreignId('pengguna_darah_id')->cascadeOnDelete();
             $table->timestamps();
         });
     }

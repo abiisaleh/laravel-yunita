@@ -6,10 +6,12 @@ use App\Filament\Resources\PenggunaDarahResource\Pages;
 use App\Filament\Resources\PenggunaDarahResource\RelationManagers;
 use App\Models\PenggunaDarah;
 use Filament\Forms;
+use Filament\Forms\Components\Component;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
+use Filament\Forms\Set;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
@@ -38,9 +40,18 @@ class PenggunaDarahResource extends Resource
             ->schema([
                 TextInput::make('pengguna'),
                 Select::make('darah_masuk_id')
-                    ->relationship('darah_masuk', 'no_selang', fn (Builder $query) => $query->whereDoesntHave('pengguna_darah'))
+                    ->multiple()
+                    ->relationship('darah_masuk', 'no_selang', function (string $operation, Builder $query) {
+                        if ($operation == 'create')
+                            $query->whereDoesntHave('pengguna_darah');
+                    })
                     ->getOptionLabelFromRecordUsing(fn (Model $record) => "({$record->no_selang}) {$record->pendonor->nama} - {$record->pendonor->golongan_darah->nama}/{$record->pendonor->jenis_darah->nama}")
                     ->searchable()
+                    ->afterStateUpdated(function (Set $set, $state) {
+                        $jumlahKolf = collect($state)->count();
+                        return $set('jumlah_kolf', $jumlahKolf);
+                    })
+                    ->live()
                     ->preload(),
                 Select::make('rumah_sakit_id')
                     ->relationship('rumah_sakit', 'nama')
@@ -69,7 +80,7 @@ class PenggunaDarahResource extends Resource
                     ->date('d/m/Y'),
                 TextColumn::make('pengguna')->searchable(),
                 TextColumn::make('rumah_sakit.nama')->searchable(),
-                TextColumn::make('darah_masuk.no_selang')->searchable(),
+                TextColumn::make('darah_masuk.no_selang')->searchable()->label('no_selang'),
                 TextColumn::make('darah_masuk.pendonor.golongan_darah.nama'),
                 TextColumn::make('darah_masuk.pendonor.jenis_darah.nama'),
                 TextColumn::make('jumlah_kolf'),

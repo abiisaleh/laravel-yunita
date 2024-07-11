@@ -6,14 +6,15 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class PenggunaDarah extends Model
 {
     use HasFactory;
 
-    public function darah_masuk(): BelongsTo
+    public function darah_masuk(): BelongsToMany
     {
-        return $this->BelongsTo(DarahMasuk::class);
+        return $this->belongsToMany(DarahMasuk::class);
     }
 
     public function rumah_sakit(): BelongsTo

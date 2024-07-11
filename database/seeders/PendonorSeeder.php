@@ -36,15 +36,11 @@ class PendonorSeeder extends Seeder
                     'user_id' => $user->id
                 ]);
 
-            $darahMasuk = \App\Models\DarahMasuk::factory()
-                ->create([
-                    'pendonor_id' => $pendonor->id
-                ]);
 
             if (rand(0, 1)) {
                 \App\Models\PenggunaDarah::factory()
+                    ->has(\App\Models\DarahMasuk::factory(1, ['pendonor_id' => $pendonor->id]), 'darah_masuk')
                     ->create([
-                        'darah_masuk_id' => $darahMasuk->id,
                         'jenis_kelamin' => $gender,
                     ]);
             }

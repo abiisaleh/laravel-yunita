@@ -25,7 +25,6 @@ class PenggunaDarahFactory extends Factory
             'jumlah_kolf' => 1,
             'tanggal' => $this->faker->dateTimeBetween('-10 month'),
             'rumah_sakit_id' => \App\Models\RumahSakit::all()->random()->id,
-            'darah_masuk_id' => \App\Models\DarahMasuk::all()->random()->id,
         ];
     }
 }
