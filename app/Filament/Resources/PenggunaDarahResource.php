@@ -64,6 +64,7 @@ class PenggunaDarahResource extends Resource
                     ])
                     ->native(false),
                 TextInput::make('jumlah_kolf')
+                    ->readOnly()
                     ->numeric()
                     ->minValue(0),
                 DatePicker::make('tanggal'),
