@@ -27,7 +27,9 @@ class PenggunaDarah extends Model
         if (auth()->check()) {
             if (auth()->user()->role == 'pendonor') {
                 static::addGlobalScope('pendonor', function (Builder $query) {
-                    $query->join('darah_masuks', 'darah_masuk_id', '=', 'darah_masuks.id')->where('pendonor_id', auth()->user()->pendonor->id);
+                    $query->join('darah_masuk_pengguna_darah', 'pengguna_darahs.id', '=', 'darah_masuk_pengguna_darah.pengguna_darah_id')
+                        ->join('darah_masuks', 'darah_masuk_pengguna_darah.darah_masuk_id', '=', 'darah_masuks.id')
+                        ->where('pendonor_id', auth()->user()->pendonor->id);
                 });
             }
         };
