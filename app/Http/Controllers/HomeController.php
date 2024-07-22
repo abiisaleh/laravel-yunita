@@ -53,7 +53,8 @@ class HomeController extends Controller
             ->groupBy('golongan_darahs.nama');
 
         $darahKeluar = DB::table('pengguna_darahs')
-            ->join('darah_masuks', 'darah_masuk_id', '=', 'darah_masuks.id')
+            ->join('darah_masuk_pengguna_darah', 'pengguna_darahs.id', '=', 'darah_masuk_pengguna_darah.pengguna_darah_id')
+            ->join('darah_masuks', 'darah_masuk_pengguna_darah.darah_masuk_id', '=', 'darah_masuks.id')
             ->join('pendonors', 'darah_masuks.pendonor_id', '=', 'pendonors.id')
             ->join('golongan_darahs', 'pendonors.golongan_darah_id', '=', 'golongan_darahs.id', 'right outer')
             ->select('golongan_darahs.nama as golongan_darah', DB::raw('COUNT(darah_masuks.id) as jumlah'))
@@ -80,7 +81,8 @@ class HomeController extends Controller
                 ->toArray();
 
             $darahKeluar = DB::table('pengguna_darahs')
-                ->join('darah_masuks', 'darah_masuk_id', '=', 'darah_masuks.id')
+                ->join('darah_masuk_pengguna_darah', 'pengguna_darahs.id', '=', 'darah_masuk_pengguna_darah.pengguna_darah_id')
+                ->join('darah_masuks', 'darah_masuk_pengguna_darah.darah_masuk_id', '=', 'darah_masuks.id')
                 ->join('pendonors', 'darah_masuks.pendonor_id', '=', 'pendonors.id')
                 ->join('golongan_darahs', 'pendonors.golongan_darah_id', '=', 'golongan_darahs.id')
                 ->join('jenis_darahs', 'pendonors.jenis_darah_id', '=', 'jenis_darahs.id')
