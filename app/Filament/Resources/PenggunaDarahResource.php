@@ -87,6 +87,7 @@ class PenggunaDarahResource extends Resource
                 TextColumn::make('jumlah_kolf'),
             ])
             ->filters([
+                SelectFilter::make('rumah_sakit.nama'),
                 SelectFilter::make('golongan_darah')
                     ->relationship('darah_masuk.pendonor.golongan_darah', 'nama'),
                 SelectFilter::make('jenis_darah')
