@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\PenggunaDarahResource\Pages;
 use App\Filament\Resources\PenggunaDarahResource\RelationManagers;
 use App\Models\PenggunaDarah;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Filament\Forms;
 use Filament\Forms\Components\Component;
 use Filament\Forms\Components\DatePicker;
@@ -14,13 +15,16 @@ use Filament\Forms\Form;
 use Filament\Forms\Set;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Actions\BulkAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\Filter;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\Facades\Blade;
 use Malzariey\FilamentDaterangepickerFilter\Filters\DateRangeFilter;
 use pxlrbt\FilamentExcel\Actions\Tables\ExportBulkAction;
 
@@ -101,7 +105,29 @@ class PenggunaDarahResource extends Resource
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
-                ExportBulkAction::make(),
+                ExportBulkAction::make()->color('success'),
+                BulkAction::make('print')
+                    ->icon('heroicon-m-printer')
+                    ->action(function (Collection $records) {
+                        $title = 'Pemakaian Darah';
+                        return response()->streamDownload(function () use ($records, $title) {
+                            echo Pdf::loadHtml(
+                                Blade::render('pdf', [
+                                    'title' => $title,
+                                    'records' => $records->toArray(),
+                                    'cols' => [
+                                        'Tgl' => 'tanggal',
+                                        'Pengguna' => 'pengguna',
+                                        'Rumah sakit' => 'rumah_sakit.nama',
+                                        'No selang' => 'darah_masuk.0.no_selang',
+                                        'Gol. darah' => 'darah_masuk.0.pendonor.golongan_darah.nama',
+                                        'Jenis darah' => 'darah_masuk.0.pendonor.jenis_darah.nama',
+                                        'Jumlah kolf' => 'jumlah_kolf',
+                                    ]
+                                ])
+                            )->setPaper('a4', 'landscape')->stream();
+                        }, 'Laporan  ' . $title . ' ' . now() . '.pdf');
+                    }),
 
             ]);
     }
