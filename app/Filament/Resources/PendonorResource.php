@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\PendonorResource\Pages;
 use App\Filament\Resources\PendonorResource\RelationManagers;
 use App\Models\Pendonor;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Cheesegrits\FilamentGoogleMaps\Fields\Map;
 use Filament\Forms;
 use Filament\Forms\Components\DatePicker;
@@ -18,6 +19,7 @@ use Filament\Forms\Get;
 use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Actions\BulkAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
@@ -25,6 +27,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\Facades\Blade;
 use pxlrbt\FilamentExcel\Actions\Tables\ExportBulkAction;
 
 class PendonorResource extends Resource
@@ -53,6 +56,7 @@ class PendonorResource extends Resource
                     ->native(false),
                 Select::make('pekerjaan_id')
                     ->relationship(name: 'pekerjaan', titleAttribute: 'nama')
+                    ->searchable()
                     ->native(false),
                 Fieldset::make()
                     ->schema([
@@ -124,7 +128,27 @@ class PendonorResource extends Resource
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
-                    ExportBulkAction::make(),
+                    ExportBulkAction::make()->color('success'),
+                    BulkAction::make('print')
+                        ->icon('heroicon-m-printer')
+                        ->action(function (Collection $records) {
+                            return response()->streamDownload(function () use ($records) {
+                                echo Pdf::loadHtml(
+                                    Blade::render('pdf', [
+                                        'title' => 'Pendonor',
+                                        'records' => $records,
+                                        'cols' => [
+                                            'Nama' => 'nama',
+                                            'Email' => 'user.email',
+                                            'Jenis kelamin' => 'jenis_kelamin',
+                                            'Gol. darah' => 'golongan_darah.nama',
+                                            'Jenis darah' => 'jenis_darah.nama',
+                                            'Tgl donor' => 'created_at',
+                                        ]
+                                    ])
+                                )->setPaper('a4', 'landscape')->stream();
+                            }, 'Laporan  pendonor ' . now() . '.pdf');
+                        }),
                     Tables\Actions\BulkAction::make('send_notification')
                         ->icon('heroicon-m-bell')
                         ->form([
