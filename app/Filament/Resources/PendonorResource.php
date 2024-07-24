@@ -128,27 +128,6 @@ class PendonorResource extends Resource
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
-                    ExportBulkAction::make()->color('success'),
-                    BulkAction::make('print')
-                        ->icon('heroicon-m-printer')
-                        ->action(function (Collection $records) {
-                            return response()->streamDownload(function () use ($records) {
-                                echo Pdf::loadHtml(
-                                    Blade::render('pdf', [
-                                        'title' => 'Pendonor',
-                                        'records' => $records,
-                                        'cols' => [
-                                            'Nama' => 'nama',
-                                            'Email' => 'user.email',
-                                            'Jenis kelamin' => 'jenis_kelamin',
-                                            'Gol. darah' => 'golongan_darah.nama',
-                                            'Jenis darah' => 'jenis_darah.nama',
-                                            'Tgl donor' => 'created_at',
-                                        ]
-                                    ])
-                                )->setPaper('a4', 'landscape')->stream();
-                            }, 'Laporan  pendonor ' . now() . '.pdf');
-                        }),
                     Tables\Actions\BulkAction::make('send_notification')
                         ->icon('heroicon-m-bell')
                         ->form([
@@ -171,6 +150,27 @@ class PendonorResource extends Resource
                                 ->success()
                         ),
                 ]),
+                ExportBulkAction::make()->color('success'),
+                BulkAction::make('print')
+                    ->icon('heroicon-m-printer')
+                    ->action(function (Collection $records) {
+                        return response()->streamDownload(function () use ($records) {
+                            echo Pdf::loadHtml(
+                                Blade::render('pdf', [
+                                    'title' => 'Pendonor',
+                                    'records' => $records,
+                                    'cols' => [
+                                        'Nama' => 'nama',
+                                        'Email' => 'user.email',
+                                        'Jenis kelamin' => 'jenis_kelamin',
+                                        'Gol. darah' => 'golongan_darah.nama',
+                                        'Jenis darah' => 'jenis_darah.nama',
+                                        'Tgl donor' => 'created_at',
+                                    ]
+                                ])
+                            )->setPaper('a4', 'landscape')->stream();
+                        }, 'Laporan  pendonor ' . now() . '.pdf');
+                    }),
             ]);
     }
 
