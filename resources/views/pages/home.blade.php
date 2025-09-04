@@ -12,8 +12,8 @@
                 <span class="text-rose-600">Donor Darah</span>: Cara Mudah Membantu Sesama
             </h1>
             <p class="mb-8 text-lg font-normal text-gray-500 lg:text-xl sm:px-16 lg:px-48 dark:text-gray-400">Darahku adalah
-                aplikasi dan portal informasi yang dikemas untuk memudahkan pelayanan darah transfusi melalui PMI di
-                Kota Jayapura.</p>
+                aplikasi dan portal informasi yang dikemas untuk memudahkan pelayanan darah transfusi melalui Unit Transfusi Darah (UPD) PMI di
+                Dok II Jayapura.</p>
             <div class="flex flex-col space-y-4 sm:flex-row sm:justify-center sm:space-y-0 sm:space-x-4">
                 <a href="/donor"
                     class="inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-white rounded-lg bg-rose-600 hover:bg-rose-800 focus:ring-4 focus:ring-rose-300 dark:focus:ring-rose-900">

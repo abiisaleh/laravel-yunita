@@ -62,7 +62,8 @@ class JadwalKegiatanResource extends Resource
                 TextColumn::make('kegiatan'),
                 TextColumn::make('tempat'),
                 TextColumn::make('tanggal')
-                    ->date('d/m/Y'),
+                    ->date('d/m/Y')
+                    ->sortable(),
                 TextColumn::make('waktu')
                     ->time(),
             ])

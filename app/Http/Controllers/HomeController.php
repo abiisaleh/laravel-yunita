@@ -11,7 +11,7 @@ class HomeController extends Controller
 {
     public static function index()
     {
-        $data['donor'] = \App\Models\JadwalKegiatan::all()->sortByDesc('tanggal')->take(3);
+        $data['donor'] = \App\Models\JadwalKegiatan::all()->sortByDesc('tanggal')->where('tanggal', '>', now())->take(3);
         $data['stok']['pendonor'] = \App\Models\Pendonor::all()->count();
         $data['stok']['darah'] = \App\Models\DarahMasuk::all()->count();
         $data['stok']['pengguna'] = \App\Models\PenggunaDarah::all()->count();
@@ -38,7 +38,7 @@ class HomeController extends Controller
 
     public static function donor()
     {
-        $data['donor'] = \App\Models\JadwalKegiatan::simplePaginate(6);
+        $data['donor'] = \App\Models\JadwalKegiatan::all()->where('tanggal', '>', now())->simplePaginate(6);
 
         return view('pages.donor', $data);
     }
